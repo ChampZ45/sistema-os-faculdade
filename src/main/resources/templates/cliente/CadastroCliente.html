@@ -16,32 +16,39 @@
 				<div class="col-sm-10">
 					<h1>Cadastro de Cliente</h1>
 				</div>
-			
-				<div class="col-sm-2">
-					<div class="aw-page-header-controls">
-						<a class="btn  btn-default" th:href="@{/clientes}">
-							<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Pesquisa</span>
-						</a>
-					</div>
-				</div>
+		
 			</div>
 		</div>
 		</div>
-
-   
-			<form method="POST" 
-				class="form-vertical  js-form-loading" >
+			<form method="POST" th:object="${cliente}" 
+				class="form-vertical  js-form-loading"  th:action="@{/cliente/novo}">
+				
+				<div class="alert  alert-success  alert-dismissible" role="alert" th:if="${not #strings.isEmpty(mensagem)}" th:fragment="mensagemSucesso">
+					<button type="button" class="close" data-dismiss="alert" ><span aria-hidden="true">&times;</span></button>
+					<span th:text="${mensagem}"></span>
+				</div>
 
 
 				<div class="row">
-					<div class="col-sm-12  form-group bw-required" >
+					<div class="col-sm-6  form-group bw-required"  >
 						<label for="nome" class="control-label">Nome</label> <input id="nome" type="text"
-							class="form-control control-label" />
+							class="form-control control-label" th:field="*{nome}" />
 					</div>
 				</div>
 
-				
-				<div class="form-group">
+			    <div class="row">
+					<div class="col-sm-4  form-group bw-required"  >
+						<label for="cnpjCpf" class="control-label">CPF/CNPJ</label> <input id="cnpjCpf" type="text"
+							class="form-control control-label" th:field="*{cnpjCpf}"/>
+					</div>
+					<div class="col-sm-2 "  >
+						<label for="telefone" class="control-label">Telefone</label> <input id="telefone" type="text"
+							class="form-control control-label js-phone-number" th:field="*{telefone}"/>
+					</div>
+			
+				</div>
+							
+				<div class="form-group" style="magin-top: 30px">
 					<button class="btn  btn-primary" type="submit">Salvar</button>
 				</div>
 

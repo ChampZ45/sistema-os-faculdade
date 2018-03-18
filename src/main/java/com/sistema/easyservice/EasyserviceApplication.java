@@ -5,9 +5,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 import com.sistema.easyservice.controller.ClienteController;
+import com.sistema.easyservice.service.ClienteService;
+import com.sistema.easyservice.service.ClienteServiceImpl;
 
 @SpringBootApplication
-@ComponentScan(basePackageClasses = ClienteController.class)
+@ComponentScan(basePackageClasses = {ClienteController.class, ClienteServiceImpl.class})
 public class EasyserviceApplication {
 
 	public static void main(String[] args) {
