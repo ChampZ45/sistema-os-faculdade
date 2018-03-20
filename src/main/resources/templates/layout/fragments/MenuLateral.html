@@ -16,10 +16,18 @@
 
 
 					<li class="aw-menu__item"><a href="#"> <i
-							class="fa  fa-fw  fa-truck"></i><span>Clientes</span> <i
+							class="fa  fa-fw fa-users"></i><span>Clientes</span> <i
 							class="aw-menu__navigation-icon  fa"></i>
 					</a>
 
+						<ul class="aw-menu__list  aw-menu__list--sublist">
+							<li class="aw-menu__item  aw-menu__item--link"
+								><a th:href="@{/cliente/novo}">Novo</a>
+							</li>
+							<li class="aw-menu__item  aw-menu__item--link"
+								><a th:href="@{/cliente}">Pesquisar</a>
+							</li>
+						</ul>
 						
 					</li>
 

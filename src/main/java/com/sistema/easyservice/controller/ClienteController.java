@@ -13,6 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sistema.easyservice.model.Cliente;
+import com.sistema.easyservice.model.TipoPessoa;
+import com.sistema.easyservice.repository.ClienteRepository;
+import com.sistema.easyservice.repository.filtro.ClienteFiltro;
 import com.sistema.easyservice.service.ClienteService;
 
 @Controller
@@ -22,9 +25,14 @@ public class ClienteController {
 	@Autowired
 	private ClienteService clienteService;
 	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
 	@GetMapping(value="/novo")
 	public ModelAndView novo(Cliente cliente){
 		ModelAndView mv = new ModelAndView("cliente/CadastroCliente");		
+		mv.addObject("tiposPessoa", TipoPessoa.values());	
+		
 		return mv;
 	}
 	
@@ -38,5 +46,14 @@ public class ClienteController {
 		clienteService.salvarCliente(cliente);	
 		attributes.addFlashAttribute("mensagem", "Cliente cadastrado com sucesso");
 		return new ModelAndView("redirect:/cliente/novo");
+	}
+	
+	@GetMapping
+	public ModelAndView pesquisarClientes(ClienteFiltro filtro,BindingResult result) {
+		ModelAndView mv = new ModelAndView("cliente/PesquisarClientes");
+		
+		mv.addObject("clientes", clienteRepository.findAll());
+		
+		return mv;
 	}
 }

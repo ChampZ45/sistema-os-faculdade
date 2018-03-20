@@ -2,6 +2,7 @@
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
 	layout:decorator="layout/LayoutPadrao">
 
 <head>
@@ -15,6 +16,14 @@
 			<div class="row">
 				<div class="col-sm-10">
 					<h1>Cadastro de Cliente</h1>
+				</div>
+				
+				<div class="col-sm-2">
+					<div class="aw-page-header-controls">
+						<a class="btn  btn-default" th:href="@{/cliente}">
+							<i class="fa  fa-fw fa-search"></i> <span class="hidden-xs  hidden-sm">Pesquisa</span>
+						</a>
+					</div>
 				</div>
 		
 			</div>
@@ -35,19 +44,40 @@
 							class="form-control control-label" th:field="*{nome}" />
 					</div>
 				</div>
-
+										
 			    <div class="row">
 					<div class="col-sm-4  form-group bw-required"  >
-						<label for="cnpjCpf" class="control-label">CPF/CNPJ</label> <input id="cnpjCpf" type="text"
-							class="form-control control-label" th:field="*{cnpjCpf}"/>
+						<label for="cnpjCpf" class="control-label js-cpf">CPF/CNPJ</label> <input id="cnpjCpf" type="text"
+							class="form-control control-label js-cpf-cnpj" disabled th:field="*{cnpjCpf}"/>
 					</div>
+					
 					<div class="col-sm-2 "  >
 						<label for="telefone" class="control-label">Telefone</label> <input id="telefone" type="text"
 							class="form-control control-label js-phone-number" th:field="*{telefone}"/>
 					</div>
 			
 				</div>
-							
+			
+				<div class="row">
+					<div class="form-group  col-sm-4 bw-required">
+						<label class="control-label">Tipo pessoa</label>
+						<div>
+
+							<th:block th:each="tipoPessoa :  ${tiposPessoa}">
+
+								<div class="radio  radio-inline">
+									<input type="radio" th:id="|id_${tipoPessoa}|"
+										class="js-tipo-pessoa" name="tipoPessoa"
+										th:value="${tipoPessoa}"
+										data:documento="${tipoPessoa.documento}"> <label
+										class="control-label" th:for="|id_${tipoPessoa}|"
+										th:text="${tipoPessoa.descricao}">Física</label>
+								</div>
+							</th:block>
+
+						</div>
+					</div>
+				</div>
 				<div class="form-group" style="magin-top: 30px">
 					<button class="btn  btn-primary" type="submit">Salvar</button>
 				</div>

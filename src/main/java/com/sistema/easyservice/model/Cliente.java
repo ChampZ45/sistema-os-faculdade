@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,6 +22,7 @@ public class Cliente implements Serializable {
 	private String nome;
 	private String telefone;
 	private String cnpjCpf;
+	private TipoPessoa tipoPessoa;	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,6 +60,13 @@ public class Cliente implements Serializable {
 		this.cnpjCpf = cnpjCpf;
 	}
 	
+	@Enumerated(EnumType.STRING)
+	public TipoPessoa getTipoPessoa() {
+		return tipoPessoa;
+	}
+	public void setTipoPessoa(TipoPessoa tipoPessoa) {
+		this.tipoPessoa = tipoPessoa;
+	}
 	
 	@Override
 	public int hashCode() {
