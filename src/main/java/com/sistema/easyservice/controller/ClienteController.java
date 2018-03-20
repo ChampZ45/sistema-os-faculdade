@@ -52,7 +52,7 @@ public class ClienteController {
 	public ModelAndView pesquisarClientes(ClienteFiltro filtro,BindingResult result) {
 		ModelAndView mv = new ModelAndView("cliente/PesquisarClientes");
 		
-		mv.addObject("clientes", clienteRepository.findAll());
+		mv.addObject("clientes", clienteRepository.recuperarClientesPorNomeECpfCnpj(filtro));
 		
 		return mv;
 	}

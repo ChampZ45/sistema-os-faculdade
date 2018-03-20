@@ -2,8 +2,8 @@ package com.sistema.easyservice.repository.filtro;
 
 public class ClienteFiltro {
 
-	private String nome;
-	private String cpfCnpj;
+	private String nome = "";
+	private String cpfCnpj = "";
 	
 	public String getNome() {
 		return nome;
