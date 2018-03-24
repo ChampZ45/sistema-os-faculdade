@@ -24,6 +24,14 @@ public class Cliente implements Serializable {
 	private String cnpjCpf;
 	private TipoPessoa tipoPessoa;	
 	
+	public Cliente() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Cliente(Long id) {
+		this.id = id;
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
