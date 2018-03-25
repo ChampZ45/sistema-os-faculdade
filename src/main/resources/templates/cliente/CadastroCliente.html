@@ -16,7 +16,7 @@
 			<div class="row">
 				<div class="col-sm-10">
 					<h1 th:if="${cliente.novo}">Cadastro de Cliente</h1>
-					<h1 th:unless="${cliente.novo}" th:text="|Edição Cliente ${cliente.nome}|">Edição de Cliente</h1>
+					<h1 th:unless="${cliente.novo}" th:text="|Edição cliente (${cliente.nome})|">Edição de Cliente</h1>
 				</div>
 				
 				<div class="col-sm-2">
