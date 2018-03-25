@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -100,6 +101,14 @@ public class Cliente implements Serializable {
 		return true;
 	}
 	
+	@Transient
+	public boolean isCheckarTipoPessoa(String tipo){
+		return this.tipoPessoa.equals(tipo);
+	}
 	
+	@Transient
+	public boolean isNovo(){
+		return this.getId() == null;
+	}
 	
 }

@@ -6,7 +6,7 @@
 	layout:decorator="layout/LayoutPadrao">
 
 <head>
-<title>Pesquisa de Clientes</title>
+<title>Pesquisa de Produtos</title>
 </head>
 <body>
 	<section layout:fragment="conteudo">
@@ -15,12 +15,12 @@
 			<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-10">
-					<h1>Pesquisa de Cliente</h1>
+					<h1>Pesquisa de Produto</h1>
 				</div>
 				
 				<div class="col-sm-2">
 					<div class="aw-page-header-controls">
-						<a class="btn  btn-default" th:href="@{/produto/novo}">
+						<a class="btn  btn-link" th:href="@{/produto/novo}">
 							<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Novo</span>
 						</a>
 					</div>
@@ -53,14 +53,14 @@
 			</form>
 
 			<div class="table-responsive">
-				<table class="table table-hover bw-tabela-simples">
+				<table class="table table-hover bw-tabela-simples table-striped table-bordered">
 					<thead>
 						<tr>							
-									<th class="table-cervejas-col-nome">Codigo</th>
-									<th class="table-cervejas-col-origem">Descricao</th>									
-									<th class="table-cervejas-col-origem">Estoque</th>
-									<th class="table-cervejas-col-estilo">Preço</th>
-								    <th class="table-cervejas-col-acoes"></th>
+									<th class="col-sm-2 ">Codigo</th>
+									<th class="col-sm-4">Descricao</th>									
+									<th class="col-sm-2">Estoque</th>
+									<th class="col-sm-2">Preço</th>
+								    <th class="col-sm-2 text-center">Ações</th>
 						</tr>
 					</thead>
 

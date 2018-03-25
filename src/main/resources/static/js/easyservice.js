@@ -69,6 +69,52 @@ Easy.MaskCnpjCpf = (function () {
 		
 }());
 
+Easy.LimparCliente = (function() {
+	
+	function LimparCliente() {
+		this.botaoLimpar = $('.js-limpar-cliente');
+		this.inputPhoneNumber = $('#telefone');
+		this.inputNome = $('#nome');
+		this.inputCpfCnpj = $('#cnpjCpf');
+//		this.checkTipoPessoa = $('.js-tipo-pessoa');
+	}
+	
+	LimparCliente.prototype.enable = function() {
+		this.botaoLimpar.on('click', onLimparFormularioCliente.bind(this));
+	};
+	
+	function onLimparFormularioCliente() {
+		this.inputPhoneNumber.val('');
+		this.inputNome.val('');
+		this.inputCpfCnpj.val('');
+	}
+	
+	return LimparCliente;
+}());
+
+Easy.LimparProduto = (function() {
+	
+	function LimparProduto() {
+		this.botaoLimpar = $('.js-limpar-produto');
+		this.inputDescricao = $('#descricao');
+		this.inputEstoque = $('#estoque');
+		this.inputPreco = $('#preco');
+//		this.checkTipoPessoa = $('.js-tipo-pessoa');
+	}
+	
+	LimparProduto.prototype.enable = function() {
+		this.botaoLimpar.on('click', onLimparFormularioProduto.bind(this));
+	};
+	
+	function onLimparFormularioProduto() {
+		this.inputDescricao.val('');
+		this.inputEstoque.val('');
+		this.inputPreco.val('');
+	}
+	
+	return LimparProduto;
+}());
+
 $(function () {
    	
 	var mascaraTelefone = new Easy.MaskPhoneNumber();
@@ -77,6 +123,12 @@ $(function () {
 	
 	var mascaraCnpjCpf = new Easy.MaskCnpjCpf();
 	mascaraCnpjCpf.enable();
+	
+	var limparFormularioCliente = new Easy.LimparCliente();
+	limparFormularioCliente.enable();
+	
+	var limparFormularioProduto = new Easy.LimparProduto();
+	limparFormularioProduto.enable();
 	
     
 });

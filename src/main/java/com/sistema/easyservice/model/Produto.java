@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="produto")
@@ -91,6 +92,9 @@ public class Produto implements Serializable{
 		return true;
 	}
 	
-	
+	@Transient
+	public boolean isNovo(){
+		return this.getId() == null;
+	}
 		
 }

@@ -46,8 +46,12 @@ public class ClienteController {
 			return novo(cliente);
 		}
 		
+		boolean edicao = false;
+		if(!cliente.isNovo())
+			edicao = true;
+				
 		clienteService.salvarCliente(cliente);	
-		attributes.addFlashAttribute("mensagem", "Cliente cadastrado com sucesso");
+		attributes.addFlashAttribute("mensagem", edicao ? "Cliente atualizado com sucesso" : "Cliente cadastrado com sucesso");
 		return new ModelAndView("redirect:/cliente/novo");
 	}
 	

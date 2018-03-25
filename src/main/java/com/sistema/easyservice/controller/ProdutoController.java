@@ -45,8 +45,12 @@ public class ProdutoController {
 			return novo(produto);
 		}
 		
+		boolean edicao = false;		
+		if(!produto.isNovo())
+			edicao = true;
+		
 		produtoService.salvar(produto);
-		attributes.addFlashAttribute("mensagem", "Produto Cadastrado com sucesso!");
+		attributes.addFlashAttribute("mensagem", edicao ? "Produto atualizado com sucesso" : "Produto Cadastrado com sucesso!");
 		return new ModelAndView("redirect:/produto/novo");
 		
 	}
