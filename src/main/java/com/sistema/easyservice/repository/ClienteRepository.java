@@ -12,4 +12,6 @@ import com.sistema.easyservice.repository.queries.ClienteQueries;
 public interface ClienteRepository extends JpaRepository<Cliente, Long>,ClienteQueries{
 
 	public List<Cliente> findByNomeInOrCnpjCpf(String nome, String cpnj);
+
+	public List<Cliente> findByNomeStartingWithIgnoreCase(String nome);
 }

@@ -115,6 +115,82 @@ Easy.LimparProduto = (function() {
 	return LimparProduto;
 }());
 
+Easy.LimparServico = (function() {
+	
+	function LimparServico() {
+		this.botaoLimpar = $('.js-limpar-servico');
+		this.inputDescricao = $('#descricao');
+		this.inputNome = $('#nome');
+		this.inputPreco = $('#preco');
+//		this.checkTipoPessoa = $('.js-tipo-pessoa');
+	}
+	
+	LimparServico.prototype.enable = function() {
+		this.botaoLimpar.on('click', onLimparFormularioServico.bind(this));
+	};
+	
+	function onLimparFormularioServico() {
+		this.inputDescricao.val('');
+		this.inputNome.val('');
+		this.inputPreco.val('');
+	}
+	
+	return LimparServico;
+}());
+
+Easy.MaskData = (function() {
+	
+	function MaskData() {
+		this.inputData = $('.js-data');
+	}
+	
+	MaskData.prototype.enable = function() {
+		this.inputData.mask('00/00/0000');
+	}
+		
+	return MaskData;
+}());
+
+
+Easy.AutoCompleteCliente = (function() {
+	
+	function AutoCompleteCliente() {
+		this.inputCliente = $('.js-autocomplete-ciente');
+	};
+	
+	AutoCompleteCliente.prototype.enable = function() {
+		
+		var options = {
+				url: function(nome) {
+					return '/easyservice/cliente?nome=' + nome;
+				},
+				getValue: 'nome',
+				minCharNumber: 3,
+				ajaxSettings:{
+					contentType: 'application/json'
+				},
+				list: {
+					onChooseEvent: onItemSelecionado.bind(this)
+				}
+
+			};
+		
+		this.inputCliente.easyAutocomplete(options);
+		
+	};
+	
+	function onItemSelecionado() {
+
+		var inputClienteId = $('#idCliente');
+		console.log(this.inputCliente.getSelectedItemData());
+		inputClienteId.val(this.inputCliente.getSelectedItemData().id);
+	
+	}
+	
+	return AutoCompleteCliente;
+	
+}());
+
 $(function () {
    	
 	var mascaraTelefone = new Easy.MaskPhoneNumber();
@@ -130,5 +206,13 @@ $(function () {
 	var limparFormularioProduto = new Easy.LimparProduto();
 	limparFormularioProduto.enable();
 	
+	var limparFormularioServico = new Easy.LimparServico();
+	limparFormularioServico.enable();
+	
+	var mascaraData = new Easy.MaskData();
+	mascaraData.enable();
+	
+	var autoCompleteCliente = new Easy.AutoCompleteCliente();
+	autoCompleteCliente.enable();
     
 });
