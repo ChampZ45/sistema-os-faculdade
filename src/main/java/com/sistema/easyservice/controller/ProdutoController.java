@@ -1,10 +1,12 @@
 package com.sistema.easyservice.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,10 +14,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sistema.easyservice.model.Produto;
+import com.sistema.easyservice.model.Usuario;
 import com.sistema.easyservice.repository.ProdutoRepository;
 import com.sistema.easyservice.repository.filtro.ProdutoFiltro;
 import com.sistema.easyservice.service.ProdutoService;
@@ -81,5 +85,10 @@ public class ProdutoController {
 		attributes.addFlashAttribute("mensagem","Produto excluido com sucesso!");
 		
 		return new ModelAndView("redirect:/produto");
+	}
+	
+	@RequestMapping(consumes= MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody List<Produto> pesquisar(String descricao) {
+		return produtoRepository.findByDescricaoStartingWithIgnoreCase(descricao);
 	}
 }

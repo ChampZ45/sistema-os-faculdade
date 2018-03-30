@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	layout:decorator="layout/LayoutPadrao">
+
+<head>
+<title>Pesquisa de Servicos</title>
+</head>
+<body>
+	<section layout:fragment="conteudo">
+
+		<div class="page-header">
+			<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-10">
+					<h1>Pesquisa de Servico</h1>
+				</div>
+				
+				<div class="col-sm-2">
+					<div class="aw-page-header-controls">
+						<a class="btn  btn-link" th:href="@{/servico/novo}">
+							<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Novo</span>
+						</a>
+					</div>
+				</div>
+		
+			</div>
+		</div>
+		</div>
+		<div class="container-fluid">
+			<form method="GET" th:object="${servicoFiltro}">
+			
+			    <div class="alert  alert-success  alert-dismissible" role="alert" th:if="${not #strings.isEmpty(mensagem)}" th:fragment="mensagemSucesso">
+					<button type="button" class="close" data-dismiss="alert" ><span aria-hidden="true">&times;</span></button>
+					<span th:text="${mensagem}"></span>
+				</div>
+			
+				<div class="row">
+					<div class="form-group col-sm-2">
+						<label class="control-label" for="codigo">Codigo</label> <input
+							type="number" class="form-control" id="codigo" autofocus="autofocus"  th:field="*{codigo}"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-sm-4">
+						<label class="control-label" for="nome">Nome</label> <input
+							type="text" class="form-control" id="nome" autofocus="autofocus"  th:field="*{nome}"/>
+					</div>
+			    </div>
+				<div class="row">
+					<div class="form-group col-sm-6">
+						<label class="control-label" for="descricao">Descricao</label> <input
+							type="text" class="form-control" id="descricao" autofocus="autofocus"  th:field="*{descricao}"/>
+					</div>
+			    </div>
+				<button type="submit" class="btn btn-primary">Pesquisar</button>
+			</form>
+
+			<div class="table-responsive">
+				<table class="table table-hover bw-tabela-simples table-striped table-bordered">
+					<thead>
+						<tr>							
+									<th class="col-sm-2 ">Codigo</th>
+									<th class="col-sm-2">Nome</th>
+									<th class="col-sm-4">Descricao</th>									
+									<th class="col-sm-2">Preço</th>
+								    <th class="col-sm-2 text-center">Ações</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr th:each="servico : ${servicos}">
+
+							<td th:text="${servico.id}">Tenis</td>
+							<td th:text="${servico.nome}">99999999999</td>
+							<td th:text="${servico.descricao}">muito bom</td>
+							<td th:text="${servico.preco}">999999</td>	
+							<td class="text-center">
+							<a class="btn  btn-link  btn-xs" th:href="@{servico/{id}(id=${servico.id})}"
+								title="Editar"> <i class="glyphicon glyphicon-pencil"></i>
+							</a> 
+							<a class="btn  btn-link  btn-xs" title="Excluir" th:href="@{servico/excluir/{id}(id=${servico.id})}"> <i
+									class="glyphicon glyphicon-remove"></i>
+							</a></td>
+
+						</tr>
+						<!-- <tr th:if="${pagina.vazia}">
+							<td class="col-sm-8"><span>Nenhum cliente encontrado!</span></td>
+						</tr>  -->
+					</tbody>
+
+				</table>
+			</div>
+
+		</div>			
+	</section>
+</body>
+</html>

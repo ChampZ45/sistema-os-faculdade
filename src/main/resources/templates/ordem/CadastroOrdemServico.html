@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	layout:decorator="layout/LayoutPadrao">
+
+<head>
+<title>Cadastro De Ordem de Serviço</title>
+</head>
+<body>
+	<section layout:fragment="conteudo">
+
+		<div class="page-header">
+			<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-10">
+					<h1 th:if="${ordemServico.novo}">Cadastro de Ordem de Serviço</h1>
+					<h1 th:unless="${ordemServico.novo}" th:text="|Edição ordemServico n° ${ordemServico.id}|">Edição de Produto</h1>
+				</div>
+				
+				<div class="col-sm-2">
+					<div class="aw-page-header-controls">
+						<a class="btn btn-link" th:href="@{/ordemServico}">
+							<i class="fa  fa-fw fa-search"></i> <span class="hidden-xs  hidden-sm">Pesquisa</span>
+						</a>
+					</div>
+				</div>
+		
+			</div>
+		</div>
+		</div>
+			<form method="POST" th:object="${ordemServico}" 
+				class="form-vertical  js-form-loading"  th:action="@{/ordemServico/novo}">
+				
+				<div class="alert  alert-success  alert-dismissible" role="alert" th:if="${not #strings.isEmpty(mensagem)}" th:fragment="mensagemSucesso">
+					<button type="button" class="close" data-dismiss="alert" ><span aria-hidden="true">&times;</span></button>
+					<span th:text="${mensagem}"></span>
+				</div>
+			
+			   <input type="hidden" th:field="*{id}">
+
+				<div class="row">
+					<div class="col-sm-6  form-group bw-required"  >
+						<label for="cliente" class="control-label">Cliente:</label> <input id="cliente" type="text"
+							class="form-control control-label js-autocomplete-ciente" placeholder="Pesquise um cliente..."/>
+						<input type="hidden" id="idCliente" th:field="*{cliente}">
+					</div>	
+					<div class="col-sm-6  form-group bw-required"  >
+						<label for="usuario" class="control-label">Responsavel:</label> <input id="usuario" type="text"
+							class="form-control control-label js-autocomplete-usuario" placeholder="Pesquise um Responsavel..." />
+							<input type="hidden" id="idResponsavel" th:field="*{responsavel}">
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="form-group  col-sm-3  bw-required">
+							<label for="status" class="control-label">Status:</label>
+					<select id="status" class="form-control" th:field="*{status}">
+	                    <option value="">Selecione um Status</option>
+	                    <option th:each="status : ${listaStatus}" th:value="${status}" th:text="${status.descricao}">Aberto</option>
+	                </select>
+				   </div>
+				   
+				   <div class="form-group  col-sm-3">
+						<label for="dataInicial" class="control-label">Data Inicial:</label>
+					<input type="text" class="form-control js-data" id="dataInicial" th:field="*{dataInicial}"
+					  autocomplete="off"/>
+					</div>
+					
+					<div class="form-group  col-sm-3">
+						<label for="dataFinal" class="control-label">Data Final:</label>
+					<input type="text" class="form-control js-data" id="dataFinal" th:field="*{dataFinal}"
+					  autocomplete="off"/>
+					</div>
+				
+				
+					<div class="col-sm-3  form-group bw-required"  >
+						<label for="garantia" class="control-label">Garantia:</label> <input id="garantia" type="text"
+							class="form-control control-label js-data" th:field="*{garantia}" />
+					</div>
+				</div>
+										
+			    <div class="row">
+					<div class="form-group col-sm-6">
+   						 <label for="descprodServ">Descrição Produto/Serviço: </label>
+    					 <textarea class="form-control" id="descprodServ" rows="4" th:field="*{descricaoProdutoServico}"></textarea>
+  					</div>
+					
+					<div class="form-group col-sm-6">
+					    <label for="defeito">Defeito: </label>
+    				<textarea class="form-control" id="defeito" rows="4" th:field="*{defeito}"></textarea>
+  					</div>
+			
+				</div>
+				
+				<div class="row">
+					<div class="form-group col-sm-6">
+   						 <label for="observacao">Observação:</label>
+    					 <textarea class="form-control" id="observacao" rows="4" th:field="*{observacao}"></textarea>
+  					</div>
+					
+					<div class="form-group col-sm-6">
+					    <label for="laudoTecnico">Laudo Tecnico: </label>
+    				<textarea class="form-control" id="laudoTecnico" rows="4" th:field="*{laudoTecnico}"></textarea>
+  					</div>
+			
+				</div>
+					
+					<div class="row">						
+						<div class="col-sm-12  form-group "  >
+							<label for="produto" class="control-label">Adicione um produto: </label> <input id="produto" type="text"
+								class="form-control control-label js-autocomplete-produto" placeholder="Pesquise um produto..."/>
+						   	<input type="hidden" id="idProduto" >  
+				 		</div>
+					</div>
+					<div class="row">
+						 <div class="col-sm-2  form-group"  >
+							<button class="btn  btn-success fa fa-plus-circle" type="button"></button>
+		     			 </div>  
+					</div>		
+				<div class="table-responsive">
+				<table class="table table-hover bw-tabela-simples table-striped table-bordered">
+					<thead>
+						<tr>							
+									<th class="col-sm-4">Codigo</th>
+									<th class="col-sm-2">Descricao</th>									
+									<th class="col-sm-2">Preço</th>									
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr th:each="produto : ${produtos}">
+
+							<td th:text="${produto.id}">Andre</td>
+							<td th:text="${produto.descricao}">FISICA</td>
+							<td th:text="${produto.preco}">99999999999</td>
+							
+						</tr>
+
+					</tbody>
+
+				</table>
+			</div>
+			<div class="row">
+				<div class="form-group col-sm-12">
+					 <label>Valor Total: R$ 0,00</label>
+				 </div>
+			</div>
+		
+			<div class="row">						
+				<div class="col-sm-12  form-group"  >
+						<label for="servico" class="control-label">Adicione um servico: </label> <input id="servico" type="text"
+							class="form-control control-label js-autocomplete-servico" placeholder="Pesquise um servico..."/>
+						  <input type="hidden" id="idServico" > 
+						  
+				</div>
+
+						
+			</div>
+			<div class="row">
+			 <div class="col-sm-2  form-group"  >
+				<button class="btn  btn-success fa fa-plus-circle" type="button"></button>
+		     </div>  
+			</div>			
+			<div class="table-responsive">
+				<table class="table table-hover bw-tabela-simples table-striped table-bordered">
+					<thead>
+						<tr>							
+									<th class="col-sm-4">Nome</th>
+									<th class="col-sm-2">Descrição</th>									
+									<th class="col-sm-2">preço</th>
+									
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr th:each="servico : ${servicos}">
+
+							<td th:text="${cliente.nome}">Andre</td>
+							<td th:text="${cliente.descricao}">FISICA</td>
+							<td th:text="${cliente.preco}">99999999999</td>							
+
+						</tr>
+
+					</tbody>
+
+				</table>
+			</div>
+			<div class="row">
+				<div class="form-group col-sm-12">
+					 <label>Valor Total: R$ 0,00</label>
+				 </div>
+			</div>
+			
+			<div class="row">
+				
+						<div class="form-group col-sm-4" >
+							<button class="btn  btn-success fa fa-check" type="submit">Salvar</button>
+							<a class="btn btn-primary" th:href="@{/ordemServico/novo}">
+								<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Novo</span>
+							</a>
+							<button class="btn  btn-warning js-limpar-ordemServico fa fa-eraser" type="button">Limpar Formulario</button>
+							
+						</div>
+							
+				</div>
+
+			</form>
+	</section>
+</body>
+</html>

@@ -182,12 +182,125 @@ Easy.AutoCompleteCliente = (function() {
 	function onItemSelecionado() {
 
 		var inputClienteId = $('#idCliente');
-		console.log(this.inputCliente.getSelectedItemData());
 		inputClienteId.val(this.inputCliente.getSelectedItemData().id);
 	
 	}
 	
 	return AutoCompleteCliente;
+	
+}());
+
+Easy.AutoCompleteUsuario = (function() {
+	
+	function AutoCompleteUsuario() {
+		this.inputResponsavel = $('.js-autocomplete-usuario');
+	};
+	
+	AutoCompleteUsuario.prototype.enable = function() {
+		
+		var options = {
+				url: function(nome) {
+					return '/easyservice/usuario?nome=' + nome;
+				},
+				getValue: 'nome',
+				minCharNumber: 3,
+				ajaxSettings:{
+					contentType: 'application/json'
+				},
+				list: {
+					onChooseEvent: onItemSelecionado.bind(this)
+				}
+
+			};
+		
+		this.inputResponsavel.easyAutocomplete(options);
+		
+	};
+	
+	function onItemSelecionado() {
+
+		var inputResponsavelId = $('#idResponsavel');		
+		inputResponsavelId.val(this.inputResponsavel.getSelectedItemData().id);
+	
+	}
+	
+	return AutoCompleteUsuario;
+	
+}());
+
+Easy.AutoCompleteProduto = (function() {
+	
+	function AutoCompleteProduto() {
+		this.input = $('.js-autocomplete-produto');
+	};
+	
+	AutoCompleteProduto.prototype.enable = function() {
+		
+		var options = {
+				url: function(descricao) {
+					return '/easyservice/produto?descricao=' + descricao;
+				},
+				getValue: 'descricao',
+				minCharNumber: 3,
+				ajaxSettings:{
+					contentType: 'application/json'
+				},
+				list: {
+					onChooseEvent: onItemSelecionado.bind(this)
+				}
+
+			};
+		
+		this.input.easyAutocomplete(options);
+		
+	};
+	
+	function onItemSelecionado() {
+
+		var inputId = $('#idProduto');		
+		inputId.val(this.input.getSelectedItemData().id);
+	
+	}
+	
+	return AutoCompleteProduto;
+	
+}());
+
+Easy.AutoCompleteServico = (function() {
+	
+	function AutoCompleteServico() {
+		this.input = $('.js-autocomplete-servico');
+	};
+	
+	AutoCompleteServico.prototype.enable = function() {
+		
+		var options = {
+				url: function(nome) {
+					return '/easyservice/servico?nome=' + nome;
+				},
+				getValue: 'nome',
+				minCharNumber: 3,
+				ajaxSettings:{
+					contentType: 'application/json'
+				},
+				list: {
+					onChooseEvent: onItemSelecionado.bind(this)
+				}
+
+			};
+		
+		this.input.easyAutocomplete(options);
+		
+	};
+	
+	function onItemSelecionado() {
+
+		var inputId = $('#idServico');		
+		inputId.val(this.input.getSelectedItemData().id);
+	
+	}
+	
+	return AutoCompleteServico;
 	
 }());
 
@@ -214,5 +327,14 @@ $(function () {
 	
 	var autoCompleteCliente = new Easy.AutoCompleteCliente();
 	autoCompleteCliente.enable();
+	
+	var autoCompleteUsuario = new Easy.AutoCompleteUsuario();
+	autoCompleteUsuario.enable();
+	
+	var autoCompleteProduto = new Easy.AutoCompleteProduto();
+	autoCompleteProduto.enable();
+	
+	var autoCompleteServico = new Easy.AutoCompleteServico();
+	autoCompleteServico.enable();
     
 });
