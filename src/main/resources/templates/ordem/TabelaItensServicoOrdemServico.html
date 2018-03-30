@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:data="http://www.thymeleaf.org/extras/data">
+
+<div class ="js-tabela-servico">
+<div class="table-responsive">
+	<table
+		class="table table-hover bw-tabela-simples table-striped table-bordered ">
+		<thead>
+			<tr>
+				<th class="col-sm-2">Nome</th>
+				<th class="col-sm-4">Descrição</th>
+				<th class="col-sm-2">preço</th>
+
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr th:each="servico : ${listaServicos}">
+
+				<td th:text="${servico.nome}">Andre</td>
+				<td th:text="${servico.descricao}">FISICA</td>
+				<td th:text="${servico.preco}">99999999999</td>
+
+			</tr>
+
+		</tbody>
+
+	</table>
+</div>
+<div class="row">
+	<div class="form-group col-sm-12">
+			<label th:text="|Valor Total R$ ${valorTotalServicos}|"></label>
+	</div>
+</div>
+
+<div class="row pull-right">
+	<div class="form-group col-sm-12">
+		<label th:text="|Valor Total Ordem Serviço R$ ${valorTotal}|"></label>
+	</div>
+</div>
+</div>
+</html>

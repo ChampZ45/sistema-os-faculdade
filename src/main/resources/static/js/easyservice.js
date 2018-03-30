@@ -304,6 +304,79 @@ Easy.AutoCompleteServico = (function() {
 	
 }());
 
+Easy.AdicionarProdutoOrdemServico = (function() {
+
+	
+	function AdicionarProdutoOrdemServico() {
+		this.inputAdicionar = $('.js-produto-ordem');
+		this.tabela = $('.js-tabela-produto');
+	};
+	
+	AdicionarProdutoOrdemServico.prototype.enable = function() {
+		this.inputAdicionar.on('click',onClickAdicionar.bind(this));
+	};
+	
+	function onClickAdicionar(evento) {
+		
+		var inputId = $('#idProduto');	
+
+		var resposta = $.ajax({
+			data: {
+				id : inputId.val()				
+			},
+		    'type': 'POST',
+		    'url': '/easyservice/ordemServico/adicionarProduto',
+		     });
+		
+			resposta.done(onItemAtualizadoNoServidor.bind(this));
+	};
+	
+	function onItemAtualizadoNoServidor(html) {
+		this.tabela.html(html);
+				
+	}
+	
+	return AdicionarProdutoOrdemServico;
+	
+}());
+
+
+Easy.AdicionarServicoOrdemServico = (function() {
+
+	
+	function AdicionarServicoOrdemServico() {
+		this.inputAdicionar = $('.js-servico-ordem');
+		this.tabela = $('.js-tabela-servico');
+	};
+	
+	AdicionarServicoOrdemServico.prototype.enable = function() {
+		this.inputAdicionar.on('click',onClickAdicionar.bind(this));
+	};
+	
+	function onClickAdicionar(evento) {
+		
+		var inputId = $('#idServico');	
+
+		var resposta = $.ajax({
+			data: {
+				id : inputId.val()				
+			},
+		    'type': 'POST',
+		    'url': '/easyservice/ordemServico/adicionarServico',
+		     });
+		
+			resposta.done(onItemAtualizadoNoServidor.bind(this));
+	};
+	
+	function onItemAtualizadoNoServidor(html) {
+		this.tabela.html(html);
+				
+	}
+	
+	return AdicionarServicoOrdemServico;
+	
+}());
+
 $(function () {
    	
 	var mascaraTelefone = new Easy.MaskPhoneNumber();
@@ -336,5 +409,11 @@ $(function () {
 	
 	var autoCompleteServico = new Easy.AutoCompleteServico();
 	autoCompleteServico.enable();
+	
+	var adicionarProdutoOrdem = new Easy.AdicionarProdutoOrdemServico();
+	adicionarProdutoOrdem.enable();
+	
+	var adicionarServicoOrdem = new Easy.AdicionarServicoOrdemServico();
+	adicionarServicoOrdem.enable();
     
 });

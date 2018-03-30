@@ -2,6 +2,7 @@ package com.sistema.easyservice.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -41,8 +42,8 @@ public class OrdemServico implements Serializable {
 	private String	  observacao;
 	private String    laudoTecnico;
 	private Usuario   responsavel;
-	List<Produto>     produtos;
-	List<Servico>     servicos;
+	List<Produto>     produtos = new ArrayList<>();
+	List<Servico>     servicos = new ArrayList<>();
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -190,6 +191,11 @@ public class OrdemServico implements Serializable {
 	@Transient
 	public boolean isNovo(){
 		return this.getId() == null;
+	}
+	
+	@Transient
+	public void adicionarProduto(Produto produto){
+		this.produtos.add(produto);
 	}
 	
 }

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:data="http://www.thymeleaf.org/extras/data">
+
+<div class ="js-tabela-produto">
+<div class="table-responsive">
+	<table
+		class="table table-hover bw-tabela-simples table-striped table-bordered ">
+		<thead>
+			<tr>
+				<th class="col-sm-2">Codigo</th>
+				<th class="col-sm-4">Descricao</th>
+				<th class="col-sm-2">Preço</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr th:each="produto : ${listaProdutos}">
+
+				<td th:text="${produto.id}">Andre</td>
+				<td th:text="${produto.descricao}">FISICA</td>
+				<td th:text="${produto.preco}">99999999999</td>
+
+			</tr>
+
+		</tbody>
+
+	</table>
+</div>
+
+<div class="row">
+	<div class="form-group col-sm-12">
+		<label th:text="|Valor Total R$ ${valorTotalProdutos}|"></label>
+	</div>
+</div>
+
+
+</div>
+
+</html>

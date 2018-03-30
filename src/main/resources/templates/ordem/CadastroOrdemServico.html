@@ -106,93 +106,41 @@
   					</div>
 			
 				</div>
-					
-					<div class="row">						
+				
+				<div class="row">						
 						<div class="col-sm-12  form-group "  >
 							<label for="produto" class="control-label">Adicione um produto: </label> <input id="produto" type="text"
 								class="form-control control-label js-autocomplete-produto" placeholder="Pesquise um produto..."/>
 						   	<input type="hidden" id="idProduto" >  
 				 		</div>
-					</div>
-					<div class="row">
+				</div>
+					
+				<div class="row">
 						 <div class="col-sm-2  form-group"  >
-							<button class="btn  btn-success fa fa-plus-circle" type="button"></button>
+							<button class="btn  btn-success fa fa-plus-circle js-produto-ordem" type="button"></button>
 		     			 </div>  
-					</div>		
-				<div class="table-responsive">
-				<table class="table table-hover bw-tabela-simples table-striped table-bordered">
-					<thead>
-						<tr>							
-									<th class="col-sm-4">Codigo</th>
-									<th class="col-sm-2">Descricao</th>									
-									<th class="col-sm-2">Preço</th>									
-						</tr>
-					</thead>
-
-					<tbody>
-						<tr th:each="produto : ${produtos}">
-
-							<td th:text="${produto.id}">Andre</td>
-							<td th:text="${produto.descricao}">FISICA</td>
-							<td th:text="${produto.preco}">99999999999</td>
-							
-						</tr>
-
-					</tbody>
-
-				</table>
-			</div>
-			<div class="row">
-				<div class="form-group col-sm-12">
-					 <label>Valor Total: R$ 0,00</label>
-				 </div>
-			</div>
-		
-			<div class="row">						
-				<div class="col-sm-12  form-group"  >
+				</div>		
+				
+				<th:block th:replace="ordem/TabelaItensOrdemServico"/>
+				
+				<div class="row">						
+					 <div class="col-sm-12  form-group"  >
 						<label for="servico" class="control-label">Adicione um servico: </label> <input id="servico" type="text"
 							class="form-control control-label js-autocomplete-servico" placeholder="Pesquise um servico..."/>
 						  <input type="hidden" id="idServico" > 
 						  
+					</div>
+						
 				</div>
 
+				<div class="row">
+			 			<div class="col-sm-2  form-group"  >
+							<button class="btn  btn-success fa fa-plus-circle js-servico-ordem" type="button"></button>
+		    			 </div>  
+				</div>	
 						
-			</div>
-			<div class="row">
-			 <div class="col-sm-2  form-group"  >
-				<button class="btn  btn-success fa fa-plus-circle" type="button"></button>
-		     </div>  
-			</div>			
-			<div class="table-responsive">
-				<table class="table table-hover bw-tabela-simples table-striped table-bordered">
-					<thead>
-						<tr>							
-									<th class="col-sm-4">Nome</th>
-									<th class="col-sm-2">Descrição</th>									
-									<th class="col-sm-2">preço</th>
-									
-						</tr>
-					</thead>
-
-					<tbody>
-						<tr th:each="servico : ${servicos}">
-
-							<td th:text="${cliente.nome}">Andre</td>
-							<td th:text="${cliente.descricao}">FISICA</td>
-							<td th:text="${cliente.preco}">99999999999</td>							
-
-						</tr>
-
-					</tbody>
-
-				</table>
-			</div>
-			<div class="row">
-				<div class="form-group col-sm-12">
-					 <label>Valor Total: R$ 0,00</label>
-				 </div>
-			</div>
-			
+				<th:block th:replace="ordem/TabelaItensServicoOrdemServico"/>
+								
 			<div class="row">
 				
 						<div class="form-group col-sm-4" >
