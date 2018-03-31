@@ -18,14 +18,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.sistema.easyservice.model.Cliente;
 import com.sistema.easyservice.model.OrdemServico;
 import com.sistema.easyservice.model.Produto;
 import com.sistema.easyservice.model.Servico;
 import com.sistema.easyservice.model.StatusOs;
+import com.sistema.easyservice.repository.OrdemServicoRepository;
 import com.sistema.easyservice.repository.ProdutoRepository;
 import com.sistema.easyservice.repository.ServicoRepository;
+import com.sistema.easyservice.repository.filtro.ClienteFiltro;
+import com.sistema.easyservice.repository.filtro.OrdemServicoFiltro;
 import com.sistema.easyservice.service.OrdemServicoService;
 import com.sistema.easyservice.session.ItensOrdemServico;
+import com.sistema.easyservice.validator.OrdemServicoValidator;
 
 @Controller
 @RequestMapping(value = "ordemServico")
@@ -33,17 +38,22 @@ public class OrdemServicoController {
 
 	@Autowired private OrdemServicoService ordemServicoService;
 	
+	@Autowired private OrdemServicoRepository ordemServicoRepository;
+	
 	@Autowired private ProdutoRepository produtoRepository;
 	
 	@Autowired private ServicoRepository servicoRepository;
 	
 	@Autowired private ItensOrdemServico itens;
 	
+	@Autowired private OrdemServicoValidator ordemValidator;
+	
 	@GetMapping(value = "/novo")
 	public ModelAndView novo(OrdemServico ordemServico){
 		ModelAndView mv = new ModelAndView("ordem/CadastroOrdemServico");
 		
-		itens = new ItensOrdemServico();
+		if(ordemServico == null)
+			itens = new ItensOrdemServico();
 		
 		itens.setProdutos(ordemServico.getProdutos());
 		itens.setServicos(ordemServico.getServicos());
@@ -65,6 +75,9 @@ public class OrdemServicoController {
 	
 		ordemServico.setProdutos(itens.getProdutos());
 		ordemServico.setServicos(itens.getServicos());
+		
+		ordemValidator.validate(ordemServico, result);
+		
 		if(result.hasErrors()){
 			return novo(ordemServico);
 		}
@@ -78,7 +91,15 @@ public class OrdemServicoController {
 		return new ModelAndView("redirect:/ordemServico/novo");
 	}
 	
-	
+	@GetMapping
+	public ModelAndView pesquisarOrdemServico(OrdemServicoFiltro filtro,BindingResult result) {
+		ModelAndView mv = new ModelAndView("ordem/PesquisarOrdemServico");
+		
+		mv.addObject("ordemServicos", ordemServicoRepository.recuperarOrdemServicoPorCodigoECliente(filtro));
+		
+		return mv;
+	}
+		
 	@PostMapping(value="/adicionarProduto")
 	public @ResponseBody ModelAndView adicionarProduto(String id){
 	
@@ -110,4 +131,35 @@ public class OrdemServicoController {
 		
 		return mv;
 	}
+	
+	@PostMapping(value="/valorTotal")
+	public @ResponseBody ModelAndView valorTotal(){
+		
+		ModelAndView mv = new ModelAndView("ordem/DisplayValorTotal");
+		
+		mv.addObject("valorTotal",itens.getValorTotal());
+		
+		return mv;
+	}
+	
+	@GetMapping(value="{id}")
+	public ModelAndView editar(@PathVariable Long id){
+		Optional<OrdemServico> ordemServico = ordemServicoRepository.findById(id);
+		
+		ModelAndView mv = this.novo(ordemServico.get());
+		mv.addObject(ordemServico.get());
+		
+		return mv;
+	}
+	
+	@GetMapping(value="/excluir/{id}")
+	public ModelAndView excluir(@PathVariable Long id, RedirectAttributes attributes){
+		
+		ordemServicoRepository.delete(new OrdemServico(id));
+		
+		attributes.addFlashAttribute("mensagem", "Ordem serviço excluida com sucesso");
+		return new ModelAndView("redirect:/ordemServico");
+		
+	}
+	
 }

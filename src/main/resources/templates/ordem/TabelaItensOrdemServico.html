@@ -24,6 +24,9 @@
 
 			</tr>
 
+						<tr th:if="${#lists.isEmpty(listaProdutos)}">
+							<td colspan="7"><center><span>Nenhum produto foi adicionado ate o momento!</span></center></td>
+						</tr>  
 		</tbody>
 
 	</table>

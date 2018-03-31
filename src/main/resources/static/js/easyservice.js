@@ -160,6 +160,8 @@ Easy.AutoCompleteCliente = (function() {
 	
 	AutoCompleteCliente.prototype.enable = function() {
 		
+		this.inputCliente.on('change',onlimparCliente.bind(this));
+		
 		var options = {
 				url: function(nome) {
 					return '/easyservice/cliente?nome=' + nome;
@@ -186,6 +188,14 @@ Easy.AutoCompleteCliente = (function() {
 	
 	}
 	
+	function onlimparCliente() {
+		
+		if(!this.inputCliente.val()){
+			var inputClienteId = $('#idCliente');
+			inputClienteId.val('');
+		}
+	}
+	
 	return AutoCompleteCliente;
 	
 }());
@@ -197,6 +207,8 @@ Easy.AutoCompleteUsuario = (function() {
 	};
 	
 	AutoCompleteUsuario.prototype.enable = function() {
+		
+		this.inputResponsavel.on('change',onlimparUsuario.bind(this));
 		
 		var options = {
 				url: function(nome) {
@@ -224,6 +236,14 @@ Easy.AutoCompleteUsuario = (function() {
 	
 	}
 	
+	function onlimparUsuario() {
+		
+		if(!this.inputResponsavel.val()){
+			var inputResponsavelId = $('#idResponsavel');
+			inputResponsavelId.val('');
+		}
+	}
+	
 	return AutoCompleteUsuario;
 	
 }());
@@ -235,6 +255,8 @@ Easy.AutoCompleteProduto = (function() {
 	};
 	
 	AutoCompleteProduto.prototype.enable = function() {
+		
+		this.input.on('change',onlimpar.bind(this));
 		
 		var options = {
 				url: function(descricao) {
@@ -262,6 +284,14 @@ Easy.AutoCompleteProduto = (function() {
 	
 	}
 	
+	function onlimpar() {
+		
+		if(!this.input.val()){
+			var inputId = $('#idProduto');
+			inputId.val('');
+		}
+	}
+	
 	return AutoCompleteProduto;
 	
 }());
@@ -273,6 +303,8 @@ Easy.AutoCompleteServico = (function() {
 	};
 	
 	AutoCompleteServico.prototype.enable = function() {
+				
+		this.input.on('change',onlimpar.bind(this));
 		
 		var options = {
 				url: function(nome) {
@@ -300,6 +332,14 @@ Easy.AutoCompleteServico = (function() {
 	
 	}
 	
+	function onlimpar() {
+		
+		if(!this.input.val()){
+			var inputId = $('#idServico');
+			inputId.val('');
+		}
+	}
+	
 	return AutoCompleteServico;
 	
 }());
@@ -310,6 +350,7 @@ Easy.AdicionarProdutoOrdemServico = (function() {
 	function AdicionarProdutoOrdemServico() {
 		this.inputAdicionar = $('.js-produto-ordem');
 		this.tabela = $('.js-tabela-produto');
+		this.divValorTotal = $('.js-total');
 	};
 	
 	AdicionarProdutoOrdemServico.prototype.enable = function() {
@@ -324,16 +365,28 @@ Easy.AdicionarProdutoOrdemServico = (function() {
 			data: {
 				id : inputId.val()				
 			},
+			async: false,
 		    'type': 'POST',
 		    'url': '/easyservice/ordemServico/adicionarProduto',
 		     });
 		
 			resposta.done(onItemAtualizadoNoServidor.bind(this));
+
+			var respostaTotal = $.ajax({			
+				'type': 'POST',
+				'url': '/easyservice/ordemServico/valorTotal',
+			});
+			
+			respostaTotal.done(atualizarValorTotal.bind(this));
+			
 	};
 	
 	function onItemAtualizadoNoServidor(html) {
-		this.tabela.html(html);
-				
+		this.tabela.html(html);				
+	}
+	
+	function atualizarValorTotal(html) {
+		this.divValorTotal.html(html);
 	}
 	
 	return AdicionarProdutoOrdemServico;
@@ -347,6 +400,7 @@ Easy.AdicionarServicoOrdemServico = (function() {
 	function AdicionarServicoOrdemServico() {
 		this.inputAdicionar = $('.js-servico-ordem');
 		this.tabela = $('.js-tabela-servico');
+		this.divValorTotal = $('.js-total');
 	};
 	
 	AdicionarServicoOrdemServico.prototype.enable = function() {
@@ -361,16 +415,28 @@ Easy.AdicionarServicoOrdemServico = (function() {
 			data: {
 				id : inputId.val()				
 			},
+			async: false,
 		    'type': 'POST',
 		    'url': '/easyservice/ordemServico/adicionarServico',
 		     });
 		
 			resposta.done(onItemAtualizadoNoServidor.bind(this));
+			
+			var respostaTotal = $.ajax({			
+				'type': 'POST',
+				'url': '/easyservice/ordemServico/valorTotal',
+			});
+			
+			respostaTotal.done(atualizarValorTotal.bind(this));
+			
 	};
 	
 	function onItemAtualizadoNoServidor(html) {
-		this.tabela.html(html);
-				
+		this.tabela.html(html);				
+	}
+	
+	function atualizarValorTotal(html) {
+		this.divValorTotal.html(html);
 	}
 	
 	return AdicionarServicoOrdemServico;

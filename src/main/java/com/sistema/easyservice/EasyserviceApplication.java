@@ -10,9 +10,10 @@ import com.sistema.easyservice.repository.ClienteRepository;
 import com.sistema.easyservice.service.ClienteService;
 import com.sistema.easyservice.service.ClienteServiceImpl;
 import com.sistema.easyservice.session.ItensOrdemServico;
+import com.sistema.easyservice.validator.OrdemServicoValidator;
 
 @SpringBootApplication
-@ComponentScan(basePackageClasses = {ClienteController.class, ClienteServiceImpl.class, ItensOrdemServico.class})
+@ComponentScan(basePackageClasses = {ClienteController.class, ClienteServiceImpl.class, ItensOrdemServico.class, OrdemServicoValidator.class})
 @EnableJpaRepositories(basePackageClasses = {ClienteRepository.class})
 public class EasyserviceApplication {
 

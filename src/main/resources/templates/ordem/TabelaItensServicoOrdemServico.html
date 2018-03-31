@@ -24,6 +24,10 @@
 				<td th:text="${servico.preco}">99999999999</td>
 
 			</tr>
+			
+			<tr th:if="${#lists.isEmpty(listaServicos)}">
+							<td colspan="7"><center><span>Nenhum serviço foi adicionado ate o momento!</span></center></td>
+		   </tr>  
 
 		</tbody>
 
@@ -35,10 +39,5 @@
 	</div>
 </div>
 
-<div class="row pull-right">
-	<div class="form-group col-sm-12">
-		<label th:text="|Valor Total Ordem Serviço R$ ${valorTotal}|"></label>
-	</div>
-</div>
 </div>
 </html>

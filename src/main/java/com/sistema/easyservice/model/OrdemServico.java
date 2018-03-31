@@ -1,6 +1,7 @@
 package com.sistema.easyservice.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class OrdemServico implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-	private Cliente   cliente;
+	private Cliente   cliente = null;
 	private LocalDate dataInicial;
 	private LocalDate dataFinal;
 	private LocalDate garantia;
@@ -41,9 +42,19 @@ public class OrdemServico implements Serializable {
 	private String 	  defeito;
 	private String	  observacao;
 	private String    laudoTecnico;
-	private Usuario   responsavel;
+	private Usuario   responsavel = null;
 	List<Produto>     produtos = new ArrayList<>();
 	List<Servico>     servicos = new ArrayList<>();
+	@Transient		BigDecimal valorTotal = BigDecimal.ZERO;	
+	
+	
+	public OrdemServico() {
+		// TODO Auto-generated constructor stub
+	}
+		
+	public OrdemServico(Long id) {
+		this.id = id;
+	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -75,6 +86,7 @@ public class OrdemServico implements Serializable {
 	}
 	
 	//	@Temporal(TemporalType.DATE)
+	@NotNull(message="Data incial é obrigatorio")
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Column(name ="data_inicial")
 	public LocalDate getDataInicial() {
@@ -85,6 +97,7 @@ public class OrdemServico implements Serializable {
 	}
 	
 //	@Temporal(TemporalType.DATE)
+	@NotNull(message="Data Final é obrigatorio")
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Column(name ="data_final")
 	public LocalDate getDataFinal() {
@@ -196,6 +209,20 @@ public class OrdemServico implements Serializable {
 	@Transient
 	public void adicionarProduto(Produto produto){
 		this.produtos.add(produto);
+	}
+	
+	@Transient
+	public BigDecimal getValorTotal(){
+				
+		produtos.forEach( i ->{ 
+			valorTotal = valorTotal.add(i.getPreco()); 				
+					});
+		
+		servicos.forEach( i ->{ 
+			valorTotal = valorTotal.add(i.getPreco()); 				
+				});
+		
+		return valorTotal;
 	}
 	
 }

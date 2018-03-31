@@ -86,9 +86,9 @@
 							</a></td>
 
 						</tr>
-						<!-- <tr th:if="${pagina.vazia}">
-							<td class="col-sm-8"><span>Nenhum cliente encontrado!</span></td>
-						</tr>  -->
+						<tr th:if="${#lists.isEmpty(servicos)}">
+							<td colspan="7"><center><span>Nenhuma  serviço encontrado!</span></center></td>
+						</tr>  
 					</tbody>
 
 				</table>

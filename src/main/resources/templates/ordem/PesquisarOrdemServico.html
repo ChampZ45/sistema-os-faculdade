@@ -6,7 +6,7 @@
 	layout:decorator="layout/LayoutPadrao">
 
 <head>
-<title>Pesquisa de Produtos</title>
+<title>Pesquisa de Ordem Serviço</title>
 </head>
 <body>
 	<section layout:fragment="conteudo">
@@ -15,12 +15,12 @@
 			<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-10">
-					<h1>Pesquisa de Produto</h1>
+					<h1>Pesquisa de Ordem Serviço</h1>
 				</div>
 				
 				<div class="col-sm-2">
 					<div class="aw-page-header-controls">
-						<a class="btn  btn-link" th:href="@{/produto/novo}">
+						<a class="btn  btn-link" th:href="@{/ordemServico/novo}">
 							<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Novo</span>
 						</a>
 					</div>
@@ -30,7 +30,7 @@
 		</div>
 		</div>
 		<div class="container-fluid">
-			<form method="GET" th:object="${produtoFiltro}">
+			<form method="GET" th:object="${ordemServicoFiltro}">
 			
 			    <div class="alert  alert-success  alert-dismissible" role="alert" th:if="${not #strings.isEmpty(mensagem)}" th:fragment="mensagemSucesso">
 					<button type="button" class="close" data-dismiss="alert" ><span aria-hidden="true">&times;</span></button>
@@ -38,15 +38,16 @@
 				</div>
 			
 				<div class="row">
-					<div class="form-group col-sm-2">
+					<div class="form-group col-sm-6">
 						<label class="control-label" for="codigo">Codigo</label> <input
-							type="number" class="form-control" id="codigo" autofocus="autofocus"  th:field="*{codigo}"/>
+							type="text" class="form-control" id="codigo" autofocus="autofocus"  th:field="*{codigo}"/>
 					</div>
 				</div>
 				<div class="row">
-					<div class="form-group col-sm-6">
-						<label class="control-label" for="descricao">Descricao</label> <input
-							type="text" class="form-control" id="descricao" autofocus="autofocus"  th:field="*{descricao}"/>
+					<div class="form-group col-sm-4">
+						<label class="control-label" for="cliente">Cliente</label> <input
+							type="text" class="form-control js-autocomplete-ciente" id="cliente" autofocus="autofocus"  th:field="*{cliente.nome}"/>
+							<input type="hidden" id="idCliente" th:field="*{cliente}">
 					</div>
 			    </div>
 				<button type="submit" class="btn btn-primary">Pesquisar</button>
@@ -56,32 +57,30 @@
 				<table class="table table-hover bw-tabela-simples table-striped table-bordered">
 					<thead>
 						<tr>							
-									<th class="col-sm-2 ">Codigo</th>
-									<th class="col-sm-4">Descricao</th>									
-									<th class="col-sm-2">Estoque</th>
-									<th class="col-sm-2">Preço</th>
+									<th class="col-sm-0">Codigo</th>
+									<th class="col-sm-4">Cliente</th>									
+									<th class="col-sm-4">Responsavel</th>
+									<th class="col-sm-2">Valor Total</th>
 								    <th class="col-sm-2 text-center">Ações</th>
 						</tr>
 					</thead>
 
 					<tbody>
-						<tr th:each="produto : ${produtos}">
+						<tr th:each="ordemServico : ${ordemServicos}">
 
-							<td th:text="${produto.id}">Tenis</td>
-							<td th:text="${produto.descricao}">muito bom</td>
-							<td th:text="${produto.estoque}">99999999999</td>
-							<td th:text="${produto.preco}">999999</td>	
-							<td class="text-center">
-							<a class="btn  btn-link  btn-xs" th:href="@{produto/{id}(id=${produto.id})}"
+							<td th:text="${ordemServico.id}">Andre</td>
+							<td th:text="${ordemServico.cliente.nome}">FISICA</td>
+							<td th:text="${ordemServico.responsavel.nome}">99999999999</td>
+							<td th:text="${ordemServico.valorTotal}">999999</td>	
+							<td class="text-center"><a class="btn  btn-link  btn-xs" th:href="@{ordemServico/{id}(id=${ordemServico.id})}"
 								title="Editar"> <i class="glyphicon glyphicon-pencil"></i>
-							</a> 
-							<a class="btn  btn-link  btn-xs" title="Excluir" th:href="@{produto/excluir/{id}(id=${produto.id})}"> <i
+							</a> <a class="btn  btn-link  btn-xs" title="Excluir" th:href="@{ordemServico/excluir/{id}(id=${ordemServico.id})}"> <i
 									class="glyphicon glyphicon-remove"></i>
 							</a></td>
 
 						</tr>
-						<tr th:if="${#lists.isEmpty(produtos)}">
-							<td colspan="7"><center><span>Nenhum produto encontrado!</span></center></td>
+						<tr th:if="${#lists.isEmpty(ordemServicos)}">
+							<td colspan="7"><center><span>Nenhuma ordem de serviço encontrada!</span></center></td>
 						</tr>  
 					</tbody>
 
