@@ -43,6 +43,7 @@ public class ItensOrdemServico {
 	}
 
 	public BigDecimal getValorTotalProdutos() {
+	valorTotalProdutos = BigDecimal.ZERO;
 	produtos.forEach( i ->{ 
 					valorTotalProdutos = valorTotalProdutos.add(i.getPreco()); 				
 				});
@@ -51,6 +52,7 @@ public class ItensOrdemServico {
 	}
 	
 	public BigDecimal getValorTotalServicos() {
+		valorTotalServicos = BigDecimal.ZERO;
 		servicos.forEach( i ->{ 
 				valorTotalServicos = valorTotalServicos.add(i.getPreco()); 				
 					});

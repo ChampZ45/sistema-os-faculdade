@@ -1,3 +1,9 @@
+.scroll {
+    max-height:300px;
+}
+
+
+
 /*
 ######################
 # UTILIDADES
@@ -138,6 +144,7 @@
 # CUSTOMIZAÇÃO DE COMPONENTES
 ######################################
 */
+
 
 .checkbox input[type="checkbox"]:checked + input + label::after {
     font-family: 'FontAwesome';

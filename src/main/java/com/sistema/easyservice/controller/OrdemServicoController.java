@@ -64,6 +64,7 @@ public class OrdemServicoController {
 	public ModelAndView cadastar(@Valid OrdemServico ordemServico,BindingResult result, Model model,RedirectAttributes attributes){
 	
 		ordemServico.setProdutos(itens.getProdutos());
+		ordemServico.setServicos(itens.getServicos());
 		if(result.hasErrors()){
 			return novo(ordemServico);
 		}
