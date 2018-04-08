@@ -20,9 +20,9 @@
 
     <ul class="nav navbar-nav  navbar-right">
        
-        <!-- <li> 
-            <p class="navbar-text" th:text="${#authentication.principal.usuario.nome}"></p>
-        </li> -->
+        <li> 
+            <p class="navbar-text"  th:text="${#authentication.principal.usuario.nome}"></p>
+        </li>
       	
         <li>
         	<a class=" hidden-xs" th:href="@{/usuario/novo}" title="Usuarios"><em class="fa fa-users" aria-hidden="true"></em></a>

@@ -13,4 +13,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	
 	public List<Usuario> findByNomeStartingWithIgnoreCase(String nome);
 
+	public Usuario findByCpfAndSenha(String cpf, String senha);
+	
+	public Usuario findByEmailAndSenha(String email, String senha);
 }

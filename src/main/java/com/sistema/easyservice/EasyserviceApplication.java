@@ -5,15 +5,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import com.sistema.easyservice.config.SecurityConfig;
 import com.sistema.easyservice.controller.ClienteController;
 import com.sistema.easyservice.repository.ClienteRepository;
-import com.sistema.easyservice.service.ClienteService;
+import com.sistema.easyservice.security.CustomAuthenticationProvider;
 import com.sistema.easyservice.service.ClienteServiceImpl;
 import com.sistema.easyservice.session.ItensOrdemServico;
 import com.sistema.easyservice.validator.OrdemServicoValidator;
 
 @SpringBootApplication
-@ComponentScan(basePackageClasses = {ClienteController.class, ClienteServiceImpl.class, ItensOrdemServico.class, OrdemServicoValidator.class})
+@ComponentScan(basePackageClasses = {ClienteController.class, ClienteServiceImpl.class, ItensOrdemServico.class, OrdemServicoValidator.class, 
+		SecurityConfig.class, CustomAuthenticationProvider.class})
 @EnableJpaRepositories(basePackageClasses = {ClienteRepository.class})
 public class EasyserviceApplication {
 

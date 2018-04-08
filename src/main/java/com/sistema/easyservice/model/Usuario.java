@@ -19,6 +19,8 @@ public class Usuario implements Serializable{
 	private Long id;
 	private String nome;
 	private String cpf;
+	private String senha;
+	private String email;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,8 +47,22 @@ public class Usuario implements Serializable{
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-
 	
+	@Column(name = "senha")
+	public String getSenha() {
+		return senha;
+	}
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+		
+	@Column(name="email")
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	@Transient
 	public boolean isNovo(){
 		return this.getId() == null;

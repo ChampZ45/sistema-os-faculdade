@@ -46,11 +46,28 @@
 							class="form-control control-label" th:field="*{nome}" />
 					</div>
 				</div>
+
+				<div class="row">
+					<div class="col-sm-4  form-group bw-required"  >
+						<label for="email" class="control-label ">E-mail:</label> <input id="email" type="text"
+							class="form-control control-label"  th:field="*{email}"/>
+					</div>					
+			
+				</div>
 										
 			    <div class="row">
 					<div class="col-sm-4  form-group bw-required"  >
-						<label for="cpf" class="control-label ">Cpf:</label> <input id="cpf" type="text"
+						<label for="cpf" class="control-label ">CPF:</label> <input id="cpf" type="text"
 							class="form-control control-label"  th:field="*{cpf}"/>
+					</div>					
+			
+				</div>
+				
+				
+				<div class="row">
+					<div class="col-sm-2  form-group bw-required"  >
+						<label for="senha" class="control-label ">Senha:</label> <input id="senha" type="password"
+							class="form-control control-label"  th:field="*{senha}"/>
 					</div>					
 			
 				</div>
