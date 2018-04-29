@@ -19,14 +19,19 @@ public class SecurityController {
 	public String login(@AuthenticationPrincipal User user){
 
 		if(user != null)
-			return "redirect:/ordemServico";
+			return "redirect:/home";
 		
 		return "Login";
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(@AuthenticationPrincipal User user, ModelMap model) {
-	   return user != null ? "redirect:/ordemServico" : "Login";
+	   return user != null ? "redirect:/home" : "Login";
+	}
+	
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public String home() {
+	   return "Home";
 	}
 	
 	@GetMapping("/403")

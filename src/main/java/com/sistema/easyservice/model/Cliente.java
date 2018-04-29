@@ -37,7 +37,6 @@ public class Cliente implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
-	@NotNull
 	public Long getId() {
 		return id;
 	}

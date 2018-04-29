@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	layout:decorator="layout/LayoutPadrao">
+
+<head>
+<title>Home</title>
+</head>
+
+<body>
+	<section layout:fragment="conteudo">
+	
+			<div class="page-header">
+				<div class="container-fluid">
+					<div class="row">
+						<h2 class="fa fa-bar-chart fa-3x" >Indicadores</h2>	
+						 <em aria-hidden="true"></em>
+		
+					</div>
+				</div>
+			</div>	
+			
+		<div>
+		<canvas id="ordemGrafico"  height="120"></canvas>
+		</div>
+
+	</section>
+
+
+<th:block layout:fragment="javascript-extra">
+
+	<script>
+
+	var Bar = Bar || {};
+
+		Bar.CarregarGraficoBarras = (function() {
+		
+			function CarregarGraficoBarras() {
+				this.graficoBarras = $('#ordemGrafico');
+			}
+	
+			CarregarGraficoBarras.prototype.enable = function() {
+		
+			var resposta = $.ajax({
+				async: false,
+		    	'type': 'GET',
+		    	'url': '/easyservice/home/graficoBarras',
+			
+		     });
+		
+			resposta.done(carregarGraficoBarras.bind(this));
+			
+		}
+	
+		function carregarGraficoBarras(resposta){
+			console.log(resposta);
+		
+		var ctx = this.graficoBarras;
+		var chart = new Chart(ctx, {
+		    type: 'horizontalBar',
+		    data: resposta,
+		    options: {}
+		});
+	}
+	
+	return CarregarGraficoBarras;
+
+	}());
+
+	$(function () {
+   	
+		var graficoBarras = new Bar.CarregarGraficoBarras();	
+		graficoBarras.enable();
+
+	});
+
+	</script>
+
+</th:block>
+</body>
+
+</html>

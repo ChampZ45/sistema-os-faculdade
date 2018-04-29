@@ -444,11 +444,11 @@ Easy.AdicionarServicoOrdemServico = (function() {
 }());
 
 $(function () {
-   	
+ 
+	
 	var mascaraTelefone = new Easy.MaskPhoneNumber();
 	mascaraTelefone.enable();
-	
-	
+		
 	var mascaraCnpjCpf = new Easy.MaskCnpjCpf();
 	mascaraCnpjCpf.enable();
 	
@@ -481,5 +481,7 @@ $(function () {
 	
 	var adicionarServicoOrdem = new Easy.AdicionarServicoOrdemServico();
 	adicionarServicoOrdem.enable();
+	
+	
     
 });
