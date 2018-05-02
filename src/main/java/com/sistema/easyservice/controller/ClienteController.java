@@ -23,6 +23,7 @@ import com.sistema.easyservice.model.TipoPessoa;
 import com.sistema.easyservice.repository.ClienteRepository;
 import com.sistema.easyservice.repository.filtro.ClienteFiltro;
 import com.sistema.easyservice.service.ClienteService;
+import com.sistema.easyservice.service.exception.ClienteInvalidoException;
 
 @Controller
 @RequestMapping(value = "/cliente")
@@ -53,7 +54,14 @@ public class ClienteController {
 		if(!cliente.isNovo())
 			edicao = true;
 				
-		clienteService.salvarCliente(cliente);	
+		try {
+			
+			clienteService.salvarCliente(cliente);			
+		} catch (ClienteInvalidoException e) {
+			result.rejectValue("cnpjCpf", e.getMessage(),e.getMessage());
+			return novo(cliente);
+		}
+		
 		attributes.addFlashAttribute("mensagem", edicao ? "Cliente atualizado com sucesso" : "Cliente cadastrado com sucesso");
 		return new ModelAndView("redirect:/cliente/novo");
 	}

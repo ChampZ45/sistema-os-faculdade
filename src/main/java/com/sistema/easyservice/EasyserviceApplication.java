@@ -2,7 +2,10 @@ package com.sistema.easyservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.sistema.easyservice.config.SecurityConfig;
@@ -21,5 +24,13 @@ public class EasyserviceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(EasyserviceApplication.class, args);
+	}
+	
+	@Bean(name="messageSource")
+	public MessageSource messageSource() {
+	    ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+	    messageSource.setBasenames("classpath:/messages");
+	    messageSource.setCacheSeconds(10); 
+	    return messageSource;
 	}
 }

@@ -17,8 +17,8 @@ public class OrdemServicoValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 
-		ValidationUtils.rejectIfEmpty(errors, "cliente.id", "Cliente é obrigatorio");
-		ValidationUtils.rejectIfEmpty(errors, "responsavel.id", "Cliente é obrigatorio");
+		ValidationUtils.rejectIfEmpty(errors, "cliente.id", "");
+		ValidationUtils.rejectIfEmpty(errors, "responsavel.id", "");
 		
 	}
 	

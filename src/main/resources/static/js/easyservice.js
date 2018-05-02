@@ -263,7 +263,7 @@ Easy.AutoCompleteProduto = (function() {
 					return '/easyservice/produto?descricao=' + descricao;
 				},
 				getValue: 'descricao',
-				minCharNumber: 3,
+//				minCharNumber: 3,
 				ajaxSettings:{
 					contentType: 'application/json'
 				},
@@ -311,7 +311,7 @@ Easy.AutoCompleteServico = (function() {
 					return '/easyservice/servico?nome=' + nome;
 				},
 				getValue: 'nome',
-				minCharNumber: 3,
+//				minCharNumber: 3,
 				ajaxSettings:{
 					contentType: 'application/json'
 				},

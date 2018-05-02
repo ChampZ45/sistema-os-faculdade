@@ -59,7 +59,8 @@
 						<tr>							
 									<th class="col-sm-0">Codigo</th>
 									<th class="col-sm-4">Cliente</th>									
-									<th class="col-sm-4">Responsavel</th>
+									<th class="col-sm-2">Responsavel</th>
+									<th class="col-sm-2 text-center">Status</th>
 									<th class="col-sm-2">Valor Total</th>
 								    <th class="col-sm-2 text-center">Ações</th>
 						</tr>
@@ -71,6 +72,15 @@
 							<td th:text="${ordemServico.id}">Andre</td>
 							<td th:text="${ordemServico.cliente.nome}">FISICA</td>
 							<td th:text="${ordemServico.responsavel.nome}">99999999999</td>
+							<td>
+							<center>
+								<th:block th:switch="${ordemServico.status.descricao}">
+									<span class="label label-success " th:case="'Finalizado'" th:text="${ordemServico.status.descricao}"></span>
+									<span class="label label-info " th:case="'Aberto'" th:text="${ordemServico.status.descricao}"></span>
+									<span class="label label-primary " th:case="'Orçamento'" th:text="${ordemServico.status.descricao}"></span>
+								</th:block>
+							</center>
+							</td>
 							<td th:text="${ordemServico.valorTotal}">999999</td>	
 							<td class="text-center"><a class="btn  btn-link  btn-xs" th:href="@{ordemServico/{id}(id=${ordemServico.id})}"
 								title="Editar"> <i class="glyphicon glyphicon-pencil"></i>

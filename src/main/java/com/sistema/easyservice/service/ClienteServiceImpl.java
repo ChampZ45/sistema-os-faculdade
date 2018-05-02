@@ -19,8 +19,12 @@ public class ClienteServiceImpl implements ClienteService {
 	public void salvarCliente(Cliente cliente) {
 	
 		if(!this.validarCliente(cliente))
-			throw new ClienteInvalidoException("Preencha todos os campos obrigatoria antes de continuar");
-		
+			throw new ClienteInvalidoException("Preencha todos os campos obrigatoria antes de continuar!");
+			
+		if(clienteRepository.findByCnpjCpf(cliente.getCnpjCpf()) != null)
+			throw new ClienteInvalidoException("CNPJ ou CPF já cadastrado!");
+			
+			
 		clienteRepository.save(cliente);
 		
 	}

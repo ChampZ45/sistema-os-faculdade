@@ -9,4 +9,6 @@ public interface ProdutoQueries {
 	
 	List<Produto> recuperarPorIdEDescricao(ProdutoFiltro filtro);
 
+	Integer recuperarQuantidadeDeProdutoNoEstoque(Long codigoProduto);
+	
 }

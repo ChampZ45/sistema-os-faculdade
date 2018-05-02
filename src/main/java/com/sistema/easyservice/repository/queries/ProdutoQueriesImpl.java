@@ -46,4 +46,13 @@ public class ProdutoQueriesImpl implements ProdutoQueries {
 		return query.getResultList();
 	}
 
+
+	@Override
+	public Integer recuperarQuantidadeDeProdutoNoEstoque(Long codigoProduto) {
+		
+		Query query = manager.createQuery("select estoque from Produto where id = :codigo").setParameter("codigo", codigoProduto);
+		
+		return query.getFirstResult();
+	}
+
 }

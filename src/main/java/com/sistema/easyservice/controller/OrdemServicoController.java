@@ -5,11 +5,12 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.sistema.easyservice.model.Cliente;
 import com.sistema.easyservice.model.OrdemServico;
 import com.sistema.easyservice.model.Produto;
 import com.sistema.easyservice.model.Servico;
@@ -26,7 +26,6 @@ import com.sistema.easyservice.model.StatusOs;
 import com.sistema.easyservice.repository.OrdemServicoRepository;
 import com.sistema.easyservice.repository.ProdutoRepository;
 import com.sistema.easyservice.repository.ServicoRepository;
-import com.sistema.easyservice.repository.filtro.ClienteFiltro;
 import com.sistema.easyservice.repository.filtro.OrdemServicoFiltro;
 import com.sistema.easyservice.service.OrdemServicoService;
 import com.sistema.easyservice.session.ItensOrdemServico;
@@ -47,6 +46,11 @@ public class OrdemServicoController {
 	@Autowired private ItensOrdemServico itens;
 	
 	@Autowired private OrdemServicoValidator ordemValidator;
+	
+	@InitBinder("ordem")
+    public void InitBinder(WebDataBinder binder){
+        binder.addValidators(ordemValidator);
+    }
 	
 	@GetMapping(value = "/novo")
 	public ModelAndView novo(OrdemServico ordemServico){
@@ -85,8 +89,16 @@ public class OrdemServicoController {
 		boolean edicao = false;
 		if(!ordemServico.isNovo())
 			edicao = true;
-				
-		ordemServicoService.salvar(ordemServico);	
+		
+		ordemServico.setMapQuantidadesProdutos(itens.getMapQuantidadesProdutos());
+		
+		try {
+			
+			ordemServicoService.salvar(ordemServico);	
+		} catch (RuntimeException e) {
+			result.reject(e.getMessage(), e.getMessage());
+			return novo(ordemServico);
+		}
 		attributes.addFlashAttribute("mensagem", edicao ? "Ordem de servico atualizado com sucesso" : "Ordem de servico cadastrado com sucesso");
 		return new ModelAndView("redirect:/ordemServico/novo");
 	}

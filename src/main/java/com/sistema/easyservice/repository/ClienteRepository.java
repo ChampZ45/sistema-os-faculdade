@@ -14,4 +14,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long>,ClienteQ
 	public List<Cliente> findByNomeInOrCnpjCpf(String nome, String cpnj);
 
 	public List<Cliente> findByNomeStartingWithIgnoreCase(String nome);
+	
+	public Cliente findByCnpjCpf(String cnpjCpf);
 }

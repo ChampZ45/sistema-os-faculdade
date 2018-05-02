@@ -5,7 +5,7 @@
 
 <div class ="js-tabela-produto">
 <div class="table-responsive scroll ">
-	<table
+	<table 
 		class="table table-hover bw-tabela-simples table-striped table-bordered table-fixed ">
 		<thead>
 			<tr>
@@ -15,10 +15,10 @@
 			</tr>
 		</thead>
 
-		<tbody>
+		<tbody >
 			<tr th:each="produto : ${listaProdutos}">
 
-				<td th:text="${produto.id}">Andre</td>
+				<td  th:text="${produto.id}">Andre</td>
 				<td th:text="${produto.descricao}">FISICA</td>
 				<td th:text="${produto.preco}">99999999999</td>
 

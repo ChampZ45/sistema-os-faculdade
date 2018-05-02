@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -45,9 +47,10 @@ public class OrdemServico implements Serializable {
 	private Usuario   responsavel = null;
 	List<Produto>     produtos = new ArrayList<>();
 	List<Servico>     servicos = new ArrayList<>();
-	@Transient		BigDecimal valorTotal = BigDecimal.ZERO;	
+	@Transient		BigDecimal valorTotal = BigDecimal.ZERO;
+	@Transient      Map<Long, Integer> mapQuantidadesProdutos = new HashMap<>();
 	
-	
+
 	public OrdemServico() {
 		// TODO Auto-generated constructor stub
 	}
@@ -207,10 +210,25 @@ public class OrdemServico implements Serializable {
 	}
 	
 	@Transient
+	public boolean isFinalizado(){
+		return this.status == null ? false : this.status.equals(StatusOs.FINALIZADO);
+	}
+	
+	@Transient
 	public void adicionarProduto(Produto produto){
 		this.produtos.add(produto);
 	}
-	
+
+	@Transient
+	public Map<Long, Integer> getMapQuantidadesProdutos() {
+		return mapQuantidadesProdutos;
+	}
+
+	@Transient
+	public void setMapQuantidadesProdutos(Map<Long, Integer> mapQuantidadesProdutos) {
+		this.mapQuantidadesProdutos = mapQuantidadesProdutos;
+	}
+
 	@Transient
 	public BigDecimal getValorTotal(){
 				

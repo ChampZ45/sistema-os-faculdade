@@ -2,7 +2,9 @@ package com.sistema.easyservice.session;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 import org.springframework.stereotype.Component;
@@ -20,8 +22,18 @@ public class ItensOrdemServico {
 	List<Servico> servicos = new ArrayList<>();
 	BigDecimal valorTotalProdutos = BigDecimal.ZERO;
 	BigDecimal valorTotalServicos = BigDecimal.ZERO;
-		
+	Map<Long, Integer> mapQuantidadesProdutos = new HashMap<>();
+	
+	public ItensOrdemServico() {
+		mapQuantidadesProdutos.clear();
+	}
+	
 	public void adicionarProduto(Produto produto){
+		
+		if(mapQuantidadesProdutos.get(produto.getId()) == null)
+			mapQuantidadesProdutos.put(produto.getId(), 0);
+		
+		mapQuantidadesProdutos.put(produto.getId(), mapQuantidadesProdutos.get(produto.getId()) + 1);
 		produtos.add(produto);
 	}
 	
@@ -66,12 +78,26 @@ public class ItensOrdemServico {
 
 	public void setProdutos(List<Produto> produtos) {
 		this.produtos = produtos;
+		
+		mapQuantidadesProdutos.clear();
+		for(Produto produto : this.produtos){
+		
+			if(mapQuantidadesProdutos.get(produto.getId()) == null)
+				mapQuantidadesProdutos.put(produto.getId(), 0);
+			
+			mapQuantidadesProdutos.put(produto.getId(), mapQuantidadesProdutos.get(produto.getId()) + 1);
+		}
 	}
 
 	public void setServicos(List<Servico> servicos) {
 		this.servicos = servicos;
 	}
 	
+		
+	public Map<Long, Integer> getMapQuantidadesProdutos() {
+		return mapQuantidadesProdutos;
+	}
+
 	public BigDecimal getValorTotal(){
 		BigDecimal valorTotal = BigDecimal.ZERO;
 		
