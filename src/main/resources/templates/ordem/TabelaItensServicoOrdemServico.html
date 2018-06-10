@@ -12,6 +12,7 @@
 				<th class="col-sm-2">Nome</th>
 				<th class="col-sm-4">Descrição</th>
 				<th class="col-sm-2">Preço</th>
+				<th class="col-sm-2">Ação</th>
 
 			</tr>
 		</thead>
@@ -22,6 +23,7 @@
 				<td th:text="${servico.nome}">Andre</td>
 				<td th:text="${servico.descricao}">FISICA</td>
 				<td th:text="${servico.preco}">99999999999</td>
+				<td ><button class="btn  btn-danger fa fa-eraser js-botao-excluir-servico" data:id=${servico.id} type="button"  >Excluir</button></td>
 
 			</tr>
 			

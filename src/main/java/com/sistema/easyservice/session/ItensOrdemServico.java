@@ -50,6 +50,15 @@ public class ItensOrdemServico {
 		produtos.remove(indice);
 	}
 
+	public void excluirServico(Servico servico){
+		int indice = IntStream.range(0, servicos.size())
+				.filter(i -> servicos.get(i).equals(servico))
+				.findAny().getAsInt();
+		
+		servicos.remove(indice);
+	}
+	
+	
 	public List<Servico> getServicos() {
 		return servicos;
 	}

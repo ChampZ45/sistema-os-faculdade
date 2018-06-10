@@ -174,4 +174,42 @@ public class OrdemServicoController {
 		
 	}
 	
+	@PostMapping(value="/excluirProduto")
+	public @ResponseBody ModelAndView excluirPoduto(String id){
+	
+		Optional<Produto> produto = produtoRepository.findById(Long.parseLong(id));
+		
+		ModelAndView mv = new ModelAndView("ordem/TabelaItensOrdemServico");
+		
+		if(!produto.isPresent())
+			return mv;
+		
+		itens.excluirProduto(produto.get());
+		
+		mv.addObject("listaProdutos",itens.getProdutos());
+		mv.addObject("valorTotalProdutos",itens.getValorTotalProdutos());
+		mv.addObject("valorTotal",itens.getValorTotal());
+		
+		return mv;
+	}
+	
+	@PostMapping(value="/excluirServico")
+	public @ResponseBody ModelAndView excluirServico(String id){
+	
+		Optional<Servico> servico = servicoRepository.findById(Long.parseLong(id));
+		
+		ModelAndView mv = new ModelAndView("ordem/TabelaItensServicoOrdemServico");
+		
+		if(!servico.isPresent())
+			return mv;
+		
+		itens.excluirServico(servico.get());
+		
+		mv.addObject("listaServicos",itens.getServicos());
+		mv.addObject("valorTotalServicos",itens.getValorTotalServicos());
+		mv.addObject("valorTotal",itens.getValorTotal());
+		
+		return mv;
+	}
+	
 }

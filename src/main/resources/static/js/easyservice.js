@@ -284,6 +284,7 @@ Easy.AutoCompleteProduto = (function() {
 	
 	}
 	
+	
 	function onlimpar() {
 		
 		if(!this.input.val()){
@@ -351,6 +352,8 @@ Easy.AdicionarProdutoOrdemServico = (function() {
 		this.inputAdicionar = $('.js-produto-ordem');
 		this.tabela = $('.js-tabela-produto');
 		this.divValorTotal = $('.js-total');
+		this.inputExcluir = $('.js-botao-excluir-produto');
+		
 	};
 	
 	AdicionarProdutoOrdemServico.prototype.enable = function() {
@@ -382,8 +385,41 @@ Easy.AdicionarProdutoOrdemServico = (function() {
 	};
 	
 	function onItemAtualizadoNoServidor(html) {
-		this.tabela.html(html);				
+		this.tabela.html(html);	
+		
+		onCallExcluir.call(this);
 	}
+	
+	function onCallExcluir() {
+		$('.js-botao-excluir-produto').on('click',onClickExcluir.bind(this));
+	}
+	
+
+	function onClickExcluir(evento) {
+		
+		var botaoAtivouEvento = $(evento.target);
+		
+		var resposta = $.ajax({
+			data: {
+				id:  botaoAtivouEvento.data('id')
+	
+			},
+			async: false,
+		    'type': 'POST',
+		    'url': 'excluirProduto',
+		     });
+		
+			resposta.done(onItemAtualizadoNoServidor.bind(this));
+			
+			
+			var respostaTotal = $.ajax({			
+				'type': 'POST',
+				'url': '/easyservice/ordemServico/valorTotal',
+			});
+			
+			respostaTotal.done(atualizarValorTotal.bind(this));
+						
+	};
 	
 	function atualizarValorTotal(html) {
 		this.divValorTotal.html(html);
@@ -430,10 +466,43 @@ Easy.AdicionarServicoOrdemServico = (function() {
 			respostaTotal.done(atualizarValorTotal.bind(this));
 			
 	};
+		
 	
 	function onItemAtualizadoNoServidor(html) {
-		this.tabela.html(html);				
+		this.tabela.html(html);	
+		
+		onCallExcluir.call(this);
 	}
+	
+	function onCallExcluir() {
+		$('.js-botao-excluir-servico').on('click',onClickExcluir.bind(this));
+	}
+	
+	function onClickExcluir(evento) {
+		
+		var botaoAtivouEvento = $(evento.target);
+		
+		var resposta = $.ajax({
+			data: {
+				id:  botaoAtivouEvento.data('id')
+	
+			},
+			async: false,
+		    'type': 'POST',
+		    'url': 'excluirServico',
+		     });
+		
+			resposta.done(onItemAtualizadoNoServidor.bind(this));
+			
+			
+			var respostaTotal = $.ajax({			
+				'type': 'POST',
+				'url': '/easyservice/ordemServico/valorTotal',
+			});
+			
+			respostaTotal.done(atualizarValorTotal.bind(this));
+						
+	};
 	
 	function atualizarValorTotal(html) {
 		this.divValorTotal.html(html);

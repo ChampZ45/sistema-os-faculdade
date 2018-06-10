@@ -22,8 +22,13 @@
 				</div>
 			</div>	
 			
-		<div>
-		<canvas id="ordemGrafico"  height="120"></canvas>
+		<div class="row">
+		<div class="col-sm-6">
+			<canvas id="ordemGraficoBar"  height="120"></canvas>
+		</div>
+		<div class="col-sm-6">
+			<canvas id="ordemGraficoPie"  height="120"></canvas>
+		</div>
 		</div>
 
 	</section>
@@ -38,7 +43,8 @@
 		Bar.CarregarGraficoBarras = (function() {
 		
 			function CarregarGraficoBarras() {
-				this.graficoBarras = $('#ordemGrafico');
+				this.graficoBarras = $('#ordemGraficoBar');
+				this.graficoPie = $('#ordemGraficoPie');
 			}
 	
 			CarregarGraficoBarras.prototype.enable = function() {
@@ -60,7 +66,14 @@
 		var ctx = this.graficoBarras;
 		var chart = new Chart(ctx, {
 		    type: 'horizontalBar',
-		    data: resposta,
+		    data: resposta.graficoBarrasDTO,
+		    options: {}
+		});
+
+		var ctxPie = this.graficoPie;
+		var chart = new Chart(ctxPie, {
+		    type: 'pie',
+		    data: resposta.gradficoPie,
 		    options: {}
 		});
 	}

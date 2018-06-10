@@ -1,16 +1,21 @@
 package com.sistema.easyservice.service;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sistema.easyservice.dto.DataSets;
+import com.sistema.easyservice.dto.DataSetsPie;
 import com.sistema.easyservice.dto.GraficoBarrasDTO;
 import com.sistema.easyservice.dto.GraficoOrdemServicoDTO;
+import com.sistema.easyservice.dto.GraficoPieDTO;
+import com.sistema.easyservice.dto.GraficoPieOrdemServicoDTO;
+import com.sistema.easyservice.dto.GraficosOrdemServicoDTO;
 import com.sistema.easyservice.model.OrdemServico;
 import com.sistema.easyservice.model.Produto;
 import com.sistema.easyservice.model.StatusOs;
@@ -35,7 +40,7 @@ public class OrdemServicoImpl implements OrdemServicoService {
 	public void salvar(OrdemServico ordemServico) {
 
 		if (ordemServico.getStatus().equals(StatusOs.FINALIZADO)) {
-			
+
 			for (Long keyProduto : ordemServico.getMapQuantidadesProdutos().keySet()) {
 
 				Integer quantidade = ordemServico.getMapQuantidadesProdutos().get(keyProduto);
@@ -51,7 +56,7 @@ public class OrdemServicoImpl implements OrdemServicoService {
 				produtoRepository.save(produto);
 
 			}
-			
+
 		}
 
 		ordemServicoRepository.save(ordemServico);
@@ -89,7 +94,7 @@ public class OrdemServicoImpl implements OrdemServicoService {
 				dataset.setBorderColor("rgb(75, 192, 192)");
 
 				dataset.getData().add(dto.getValorServico());
-				graficoDTO.getDatasets().add(VALOR_SERVICO, dataset);
+				graficoDTO.getDatasets().add(VALOR_SERVICO, dataset); 
 
 				dataset = new DataSets();
 				dataset.setLabel("Total");
@@ -113,6 +118,59 @@ public class OrdemServicoImpl implements OrdemServicoService {
 		}
 
 		return graficoDTO;
+	}
+
+	@Override
+	public GraficoPieDTO montarGraficoPie() {
+
+		List<GraficoPieOrdemServicoDTO> listaDTO = ordemServicoRepository.recuperarOrdemServicoAgrupadoPorQuantidade();
+		
+		if(listaDTO.isEmpty())
+			return null;
+
+		GraficoPieDTO graficoDTO = new GraficoPieDTO();
+
+		for (GraficoPieOrdemServicoDTO dto : listaDTO) {
+
+			graficoDTO.getLabels().add(DataUtil.stringMes(DataUtil.mes(dto.getDataIncial())));
+
+			if (graficoDTO.getDatasets().isEmpty()) {
+				DataSetsPie dataset = new DataSetsPie();
+
+				dataset.getBackgroundColor().add("#FF6384");
+				dataset.getBackgroundColor().add("#36A2EB");
+				dataset.getBackgroundColor().add("#FFCE56");
+				dataset.getBackgroundColor().add("#FF4000");
+				dataset.getBackgroundColor().add("#BFFF00");
+				dataset.getHoverBackgroundColor().add("#FF6384");
+				dataset.getHoverBackgroundColor().add("#36A2EB");
+				dataset.getHoverBackgroundColor().add("#FFCE56");
+				dataset.getHoverBackgroundColor().add("#FF4000");
+				dataset.getHoverBackgroundColor().add("#BFFF00");
+				dataset.getData().add(new BigDecimal(dto.getQuantidade().intValue()));
+				graficoDTO.getDatasets().add(0, dataset);
+
+			}else{
+				graficoDTO.getDatasets().get(0).getData().add(new BigDecimal(dto.getQuantidade().intValue()));
+			}
+
+		}
+		
+		return graficoDTO;
+	}
+
+	@Override
+	public GraficosOrdemServicoDTO retornarGraficos() {
+		
+		GraficosOrdemServicoDTO graficosDTO = new GraficosOrdemServicoDTO();
+		List<GraficoOrdemServicoDTO> lista = ordemServicoRepository.recuperarOrdemDeServicoAgrupadoPorMesEAno();
+		
+		graficosDTO.setGraficoBarrasDTO(montarGraficoBarras(lista));
+		
+		graficosDTO.setGradficoPie(montarGraficoPie());
+		
+		
+		return graficosDTO;
 	}
 
 }

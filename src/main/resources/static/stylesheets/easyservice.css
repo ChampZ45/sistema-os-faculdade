@@ -145,6 +145,9 @@
 ######################################
 */
 
+.backGroundImportant{
+	background-color: #80FFB5 !!important;
+}
 
 .checkbox input[type="checkbox"]:checked + input + label::after {
     font-family: 'FontAwesome';
